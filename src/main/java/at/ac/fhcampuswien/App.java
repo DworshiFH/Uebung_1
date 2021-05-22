@@ -1,5 +1,9 @@
 package at.ac.fhcampuswien;
 
-public class App {
+import static java.lang.Character.*;
 
+public class App {
+    public static boolean checkPassword(String pw){
+        return false;
+    }
 }
