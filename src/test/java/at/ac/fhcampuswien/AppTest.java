@@ -5,38 +5,38 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AppTest {
 
-    //Test for 8 letters long passwords IGNORES TRIPLE LETTERS
+    //Test Data for 8 character long passwords IGNORES TRIPLE characters
     String test1 = ""; //empty case
-    String test2 = "aitilapp"; //8 letters long, no special, no numbers, no capitals
-    String test3 = "aitilaoP"; //8 letters long, no special, no numbers, with capitals
-    String test4 = "ait8l9op"; //8 letters long, no special, with numbers, no capitals
-    String test5 = "ai4pi1@4"; //8 letters long, with special, with number, no capitals
-    String test6 = "ai4Pi1€4"; //8 letters long, now with forbidden special, with capital
-    String test7 = "ai4Pi1@4"; //8 letters long, with special, with numbers, with capitals IS VALID
+    String test2 = "aitilapp"; //8 characters long, no special, no numbers, no capitals
+    String test3 = "aitilaoP"; //8 characters long, no special, no numbers, with capitals
+    String test4 = "ait8l9op"; //8 characters long, no special, with numbers, no capitals
+    String test5 = "ai4pi1@4"; //8 characters long, with special, with number, no capitals
+    String test6 = "ai4Pi1€4"; //8 characters long, now with forbidden special, with capital
+    String test7 = "ai4Pi1@4"; //8 characters long, with special, with numbers, with capitals IS VALID
 
-    //Test for 25 letters long passwords IGNORES TRIPLE LETTERS
-    String test8 = "aitilaopueldpsjtngkdeergd"; //25 letters long, no special, no numbers, no capitals
-    String test9 = "aitilaopueldpsjtngDdEErgd"; //25 letters long, no special, no numbers, with capitals
-    String test10 = "aitilaopueldps89ngDdEErgd"; //25 letters long, no special, with numbers, no capitals
-    String test11 = "aiti$aopueldps89ngddeer@d"; //25 letters long, with special, with number, no capitals
-    String test12 = "aiti$aopueldps89ngDdEEr€d"; //25 letters long, now with forbidden special, with capital
-    String test13 = "tujap$@943GjeosEEIPkd7811"; //25 letters long, with special, with numbers, with capitals IS VALID
+    //Test for 25 character long passwords IGNORES TRIPLE characters
+    String test8 = "aitilaopueldpsjtngkdeergd"; //25 characters long, no special, no numbers, no capitals
+    String test9 = "aitilaopueldpsjtngDdEErgd"; //25 characters long, no special, no numbers, with capitals
+    String test10 = "aitilaopueldps89ngDdEErgd"; //25 characters long, no special, with numbers, no capitals
+    String test11 = "aiti$aopueldps89ngddeer@d"; //25 characters long, with special, with number, no capitals
+    String test12 = "aiti$aopueldps89ngDdEEr€d"; //25 characters long, now with forbidden special, with capital
+    String test13 = "tujap$@943GjeosEEIPkd7811"; //25 characters long, with special, with numbers, with capitals IS VALID
 
-    //Test for 8 letters long passwords WITH TRIPLE LETTERS
+    //Test Data for 8 character long passwords with more than TRIPLE CHARACTERS
     String test14 = "Piiii1€4"; //triple letter is not capital
     String test15 = "pIIII1€4@4"; //triple letter with capital
 
-    //Test for 25 letters long passwords WITH TRIPLE LETTERS
-    String test16 = "AItila@ppppdpsjtngkdee45d"; //triple letter is not capital
-    String test17 = "ai@$laoPPPPdpsj6ng9dEErgd"; //triple letter is capital
+    //Test Data for 25 character long passwords with more than TRIPLE CHARACTERS
+    String test16 = "AItila@ppppdpsjtngkdee45d"; //quad character is not capital
+    String test17 = "ai@$laoPPPPdpsj6ng9dEErgd"; //quad character is capital
 
-    //Test for length
-    String test18 = "a4Pi1@4"; //7 characters long, otherwise valid
-    String test19 = "tujap$@943GjeosEEIPkd7811e"; //26 characters long, otherwise valid
+    //Test Data for length
+    String test18 = "a4Pi1@4"; //only 7 characters long, otherwise valid
+    String test19 = "tujap$@943GjeosEEIPkd7811e"; //over 25 characters long, otherwise valid
 
 
-    @Test //Test for INVALID Passwords => Assertions must be FALSE
-    public void testPW_len_8_1() {
+    @Test //Tests for INVALID Passwords => Assertions must be FALSE
+    public void testPW_len8_1_to_6() {
         boolean test_1 = App.checkPassword(test1);
         boolean test_2 = App.checkPassword(test2);
         boolean test_3 = App.checkPassword(test3);
@@ -53,13 +53,13 @@ public class AppTest {
     }
 
     @Test //Tests for VALID Password => Assertion must be TRUE
-    public void testPW_len_8_7() {
+    public void testPW_len8_7() {
         boolean test = App.checkPassword(test7);
         assertTrue(test);
     }
 
     @Test //Test for INVALID Passwords => Assertions must be FALSE
-    public void testPW_len_25_8() {
+    public void testPW_len25_8_to_12() {
         boolean test_1 = App.checkPassword(test8);
         boolean test_2 = App.checkPassword(test9);
         boolean test_3 = App.checkPassword(test10);
@@ -74,13 +74,13 @@ public class AppTest {
     }
 
     @Test //Test for VALID Password => Assertion must be TRUE
-    public void testPW_len_25_13() {
+    public void testPW_len25_13() {
         boolean test = App.checkPassword(test13);
         assertTrue(test);
     }
 
-    @Test
-    public void testPW_len_8_w3L(){ //with triple letters
+    @Test //with over triple characters => Assertion must be FALSE
+    public void testPW_len8Triple_14_to_15(){
         boolean test_1 = App.checkPassword(test14);
         boolean test_2 = App.checkPassword(test15);
 
@@ -88,8 +88,8 @@ public class AppTest {
         assertFalse(test_2);
     }
 
-    @Test
-    public void testPW_len_25_w3L(){ //with triple letters
+    @Test //with over triple characters
+    public void testPW_len25Triple_16_to_17(){
         boolean test_1 = App.checkPassword(test16);
         boolean test_2 = App.checkPassword(test17);
 
@@ -98,12 +98,12 @@ public class AppTest {
     }
 
     @Test
-    public void testPW_lenUnder8(){
+    public void testPW_lenUnder8_18(){
         boolean test = App.checkPassword(test18);
         assertFalse(test);
     }
     @Test
-    public void testPW_lenOver25(){
+    public void testPW_lenOver25_19(){
         boolean test = App.checkPassword(test19);
         assertFalse(test);
     }
