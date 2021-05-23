@@ -79,7 +79,7 @@ public class AppTest {
         assertTrue(test);
     }
 
-    @Test //with over triple characters => Assertion must be FALSE
+    @Test //with over triple characters. Test for INVALID Passwords => Assertions must be FALSE
     public void testPW_len8Triple_14_to_15(){
         boolean test_1 = App.checkPassword(test14);
         boolean test_2 = App.checkPassword(test15);
@@ -88,7 +88,7 @@ public class AppTest {
         assertFalse(test_2);
     }
 
-    @Test //with over triple characters
+    @Test //with over triple characters. Test for INVALID Passwords => Assertions must be FALSE
     public void testPW_len25Triple_16_to_17(){
         boolean test_1 = App.checkPassword(test16);
         boolean test_2 = App.checkPassword(test17);
@@ -97,12 +97,12 @@ public class AppTest {
         assertFalse(test_2);
     }
 
-    @Test
+    @Test //length under 8. Test for INVALID Passwords => Assertions must be FALSE
     public void testPW_lenUnder8_18(){
         boolean test = App.checkPassword(test18);
         assertFalse(test);
     }
-    @Test
+    @Test //length over 25. Test for INVALID Passwords => Assertions must be FALSE
     public void testPW_lenOver25_19(){
         boolean test = App.checkPassword(test19);
         assertFalse(test);
