@@ -8,7 +8,7 @@ public class App {
     private static final int max_len = 25; //maximum password lenght
 
 
-    /*
+    /**
     Function to test passwords for the following criteria:
         - Must be at least 8 characters long.
         - Must be no longer than 25 characters.
@@ -27,22 +27,62 @@ public class App {
             - All other special characters are not allowed.
     */
     public static boolean checkPassword(String pw){
-        //set boolean flags, initiate with FALSE
-        boolean hasLowerCase=false;
-        boolean hasUpperCase=false;
-        boolean hasNum=false;
-        boolean hasSpecial=false;
+        //check for over triple characters
+        if(hasQuadChar(pw)) return false;
 
-        //Test for length
+        //check for progressing numbers
+        if(progressingNums(pw)) return false;
+
+        return pwLength(pw) && hasSpecial(pw) && hasLowerCase(pw) && hasUpperCase(pw) && hasNum(pw); //pw is valid => return true
+    }
+
+    public static boolean pwLength(String pw){
         if(pw.length()<min_len) return false;
         if(pw.length()>max_len) return false;
+        return true;
+    }
 
-        //loop through String
+    public static boolean hasLowerCase(String pw){
         for(int i = 0; i < pw.length(); i++){
+            if(isLowerCase(pw.charAt(i))){
+                return true;
+            }
+        }
+        return false;
+    }
 
-            //contains special?
-            if(!isDigit(pw.charAt(i)) && !isLetter(pw.charAt(i))){
-                switch (pw.charAt(i)){
+    public static boolean hasUpperCase(String pw){
+        for(int i = 0; i < pw.length(); i++){
+            if(isUpperCase(pw.charAt(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasNum(String pw){
+        for(int i = 0; i < pw.length(); i++){
+            if(isDigit(pw.charAt(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean hasQuadChar(String pw){
+        for(int i = 0; i < pw.length()-3; i++){ // was -4 at time of submission, changed it afterwards
+            if(pw.charAt(i)==pw.charAt(i+1) &&
+                    pw.charAt(i)==pw.charAt(i+2) &&
+                    pw.charAt(i)==pw.charAt(i+3)) return true;
+        }
+        return false;
+    }
+
+    public static boolean hasSpecial(String pw){
+        boolean hasSpecial=false;
+        for(int i = 0; i < pw.length(); i++) {
+            if (!isDigit(pw.charAt(i)) && !isLetter(pw.charAt(i))) {
+                switch (pw.charAt(i)) {
                     case '(':
                     case ')':
                     case '$':
@@ -51,26 +91,22 @@ public class App {
                     case '%':
                     case '/':
                     case '@':
-                        hasSpecial=true; break;
+                        hasSpecial = true; break;
                     default: //if the special character is not one of the listed, it is an illegal character
                         return false;
                 }
             }
-
-            //check for mandatory characters
-            if(isLowerCase(pw.charAt(i))) hasLowerCase=true;
-            if(isUpperCase(pw.charAt(i))) hasUpperCase=true;
-            if(isDigit(pw.charAt(i))) hasNum=true;
         }
+        return hasSpecial;
+    }
 
-        //check for over triple characters
-        for(int i = 0; i < pw.length()-4; i++){
-            if(pw.charAt(i)==pw.charAt(i+1) &&
-                    pw.charAt(i)==pw.charAt(i+2) &&
-                    pw.charAt(i)==pw.charAt(i+3)) return false;
+    public static boolean progressingNums(String pw){
+        for(int i = 0; i < pw.length()-2; i++){
+            if( isDigit(pw.charAt(i)) && isDigit(pw.charAt(i+1)) && isDigit(pw.charAt(i+2)) ){
+                if( (int)pw.charAt(i) == (int)pw.charAt(i+1) - 1  &&
+                        (int)pw.charAt(i) == (int)pw.charAt(i+2) - 2 ) return true;
+            }
         }
-
-        //all checks have passed and booleans are all true?
-        return hasLowerCase && hasUpperCase && hasNum && hasSpecial; //pw is valid => return true
+        return false;
     }
 }
